@@ -81,7 +81,7 @@ class App extends Component {
             params={{
               particles: {
                 number: {
-                  value: this.state.dataCount * 3
+                  value: this.state.dataCount
                 },
                 color: {
                   value: '#DAF7A6'
