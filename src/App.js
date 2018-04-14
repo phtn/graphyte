@@ -3,8 +3,11 @@ import React, { Component } from 'react';
 import './App.css';
 import Particles from 'react-particles-js'
 import firebase from 'firebase'
-// import Graph from './components/graph'
+import Graph from './components/graph'
 
+import 'semantic-ui-css/semantic.min.css'
+
+import Occ from './components/Occ'
 
 const config = {
   apiKey: "AIzaSyBWbbhY771lR6ckh6w90SLUlvvJ1W-BiSM",
@@ -16,24 +19,47 @@ const config = {
 }
 const fire = firebase.initializeApp(config)
 
+const styles = {
+  subtitle: { 
+    fontFamily: 'Roboto, sans-serif',
+    fontWeight: 100
+  } 
+}
 class App extends Component {
   constructor(props){
     super(props)
-    this.state = {data:[], dataCount:0, currentItem:null}
+    this.state = {data:[], dataCount:0, currentItem:null, ids: []}
   }
   componentDidMount(){
-    const store = fire.database().ref('prototype_1')
+    const store = fire.database().ref('report/')
     let data = []
-    store.once('value', snap => {
+    store.on('value', snap => {
       
       let items = snap.val()
-      console.log(typeof(items))
+      let ids = []
+      let dataCount = items.length
+      // console.log(items)
       for (let item in items){
-        console.log(item)
+        // console.log('item ' + item)
+        ids.push(item)
+
         data.push({
           id: item,
+          ADR: items[item].ADR,
+          Available: items[item].Available,
+          Occupied: items[item].Occupied,
+          OccPercent: items[item].OccPercent,
+          RoomRev: items[item].RoomRev,
+          RevPAR: items[item].RevPAR,
+          DueOut: items[item].DueOut,
+          // createdAt: new Date()
         })
+      
       }
+
+      this.setState({ids:ids})
+      this.setState({data: data})
+      this.setState({dataCount: data.length * 100})
       
       //     primary: items[item].cdatetime,
       //     // secondary: items[item].crimedescr,
@@ -45,7 +71,7 @@ class App extends Component {
         // console.log(item)
         
       // }     
-      this.setState({data: data}, ()=> this.setState({dataCount: data.length}))
+      // this.setState({data: data}, ()=> this.setState({dataCount: data.length}))
       
     })
     
@@ -54,14 +80,10 @@ class App extends Component {
   }
   getList(data){
     if (data) {
-        // let index = data.findIndex(x => x.id === data[i].id)
-      
-      // console.log(index)
-      // console.log(data.length)
+      // console.log(this.state.data)
       return data.map((item)=> (
-        <li key={item.id}>{item.id}</li>
+        <li key={item.id}>{item.ADR}</li>
       ))
-      // console.log(data)
     }
     
   }
@@ -69,15 +91,11 @@ class App extends Component {
     console.log(a)
   }
   render() {
-    // this.getList(this.state.data)
-    // console.log(this.state.data)
-    // console.log(this.state.data)
-    // console.log(this.state.currentItem)
     return (
       <div className="App">
         <header className="App-header">
         <Particles 
-            height={'150'}
+            height={'10vh'}
             params={{
               particles: {
                 number: {
@@ -104,7 +122,7 @@ class App extends Component {
               }
             }}
             />
-          <h1 className="App-title">Graphyte &copy; </h1>
+          <h1 className="App-title">Graphyte &copy; <span style={styles.subtitle}>real-time data handling</span></h1>
         </header>
           
           {/* {this.state.data.map(item => (
@@ -116,8 +134,10 @@ class App extends Component {
               <li key={item.id}>{item.id}</li>
             ))
           }</ol> */}
-          {this.getList(this.state.data)}
+          {/* {this.getList(this.state.data)} */}
 
+
+          <Occ data={this.state.data} />
           
           
       </div>
