@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Particles from 'react-particles-js'
 import firebase from 'firebase'
-import Graph from './components/graph'
 
 import 'semantic-ui-css/semantic.min.css'
 
