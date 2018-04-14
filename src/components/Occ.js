@@ -28,9 +28,6 @@ const getColumn = data => {
           <Label color='red'>{item.RoomRev}</Label>
         </Table.Cell>
         <Table.Cell>
-          <Label color='black'>{item.DueOut}</Label>
-        </Table.Cell>
-        <Table.Cell>
           <Label color='black'>{item.Day}</Label>
         </Table.Cell>
       </Table.Row>
@@ -41,7 +38,7 @@ const getColumn = data => {
 }
 
 const Occupancy = (props) => (
-  <Table celled>
+  <Table celled fixed>
     <Table.Header>
       <Table.Row>
         <Table.HeaderCell>ADR</Table.HeaderCell>
@@ -50,7 +47,6 @@ const Occupancy = (props) => (
         <Table.HeaderCell>Occ %</Table.HeaderCell>
         <Table.HeaderCell>PAR</Table.HeaderCell>
         <Table.HeaderCell>Rev</Table.HeaderCell>
-        <Table.HeaderCell>DueO</Table.HeaderCell>
         <Table.HeaderCell>Day</Table.HeaderCell>
       </Table.Row>
     </Table.Header>
@@ -63,7 +59,7 @@ const Occupancy = (props) => (
 
     <Table.Footer>
       <Table.Row>
-        <Table.HeaderCell colSpan='8'>
+        <Table.HeaderCell colSpan='7'>
           <Menu floated='right' pagination>
             <Menu.Item as='a' icon>
               <Icon name='chevron left' />

@@ -41,7 +41,7 @@ class App extends Component {
       for (let item in items){
         // console.log('item ' + item)
         ids.push(item)
-
+        // console.log(items[item].Day)
         data.push({
           id: item,
           ADR: items[item].ADR,
@@ -52,7 +52,8 @@ class App extends Component {
           RevPAR: items[item].RevPAR,
           DueOut: items[item].DueOut,
           Day: items[item].Day,
-          // createdAt: new Date()
+          Date: items[item].Date,
+          createdAt: new Date()
         })
       
       }
@@ -61,17 +62,6 @@ class App extends Component {
       this.setState({data: data})
       this.setState({dataCount: data.length * 100})
       
-      //     primary: items[item].cdatetime,
-      //     // secondary: items[item].crimedescr,
-      //     // gran: items[item].point_granularity
-      //   })
-        
-        // this.setState({data: data}, d=> {this.setState({currentItem: item})})
-        //  console.log(this.state.data[0])
-        // console.log(item)
-        
-      // }     
-      // this.setState({data: data}, ()=> this.setState({dataCount: data.length}))
       
     })
     
@@ -91,6 +81,7 @@ class App extends Component {
     console.log(a)
   }
   render() {
+    console.log(this.state.data)
     return (
       <div className="App">
         <header className="App-header">
