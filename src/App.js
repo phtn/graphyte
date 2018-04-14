@@ -51,6 +51,7 @@ class App extends Component {
           RoomRev: items[item].RoomRev,
           RevPAR: items[item].RevPAR,
           DueOut: items[item].DueOut,
+          Day: items[item].Day,
           // createdAt: new Date()
         })
       
@@ -80,7 +81,7 @@ class App extends Component {
   getList(data){
     if (data) {
       // console.log(this.state.data)
-      return data.map((item)=> (
+      return data.reverse.map((item)=> (
         <li key={item.id}>{item.ADR}</li>
       ))
     }
@@ -121,7 +122,7 @@ class App extends Component {
               }
             }}
             />
-          <h1 className="App-title">Graphyte &copy; <span style={styles.subtitle}>real-time data handling</span></h1>
+          <h1 className="App-title">Graphyte &copy; <span style={styles.subtitle}>| real-time data handling</span></h1>
         </header>
           
           {/* {this.state.data.map(item => (
@@ -135,7 +136,7 @@ class App extends Component {
           }</ol> */}
           {/* {this.getList(this.state.data)} */}
 
-
+          <h3>Client: Clarion New Hope (demo)</h3>
           <Occ data={this.state.data} />
           
           

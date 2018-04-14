@@ -3,7 +3,8 @@ import { Icon, Label, Menu, Table, Progress } from 'semantic-ui-react'
 
 const getColumn = data => {
   if(data){
-    return data.map((item)=> (
+    let reversed = data.slice(0).reverse()
+    return reversed.map((item)=> (
 
       <Table.Row key={item.id}>
         <Table.Cell>
@@ -30,7 +31,7 @@ const getColumn = data => {
           <Label color='black'>{item.DueOut}</Label>
         </Table.Cell>
         <Table.Cell>
-          <Label color='black'>{item.createdAt}</Label>
+          <Label color='black'>{item.Day}</Label>
         </Table.Cell>
       </Table.Row>
 
@@ -50,7 +51,7 @@ const Occupancy = (props) => (
         <Table.HeaderCell>PAR</Table.HeaderCell>
         <Table.HeaderCell>Rev</Table.HeaderCell>
         <Table.HeaderCell>DueO</Table.HeaderCell>
-        <Table.HeaderCell>D</Table.HeaderCell>
+        <Table.HeaderCell>Day</Table.HeaderCell>
       </Table.Row>
     </Table.Header>
 
