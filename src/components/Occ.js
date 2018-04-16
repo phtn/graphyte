@@ -16,11 +16,12 @@ const getColumn = data => {
           <Label color='blue'>{item.Available}</Label>
         </Table.Cell>
         <Table.Cell>
-          <Label color='yellow'>{item.Occupied}</Label>
+          {item.Occupied}
+          <Progress percent={parseInt(item.OccPercent.substr(0,item.OccPercent.length - 2), 10)} indicating/>
         </Table.Cell>
         <Table.Cell>
           {item.OccPercent}
-          <Progress percent={parseInt(item.OccPercent.substr(0,item.OccPercent.length - 2), 10)} indicating/>
+          
           <Particles 
             height={'5vh'}
             params={{
