@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Particles from 'react-particles-js'
 import firebase from 'firebase'
+import Recharts from './components/Recharts'
 
 import 'semantic-ui-css/semantic.min.css'
 
@@ -36,7 +37,6 @@ class App extends Component {
       
       let items = snap.val()
       let ids = []
-      let dataCount = items.length
       // console.log(items)
       for (let item in items){
         // console.log('item ' + item)
@@ -60,28 +60,34 @@ class App extends Component {
 
       this.setState({ids:ids})
       this.setState({data: data})
-      this.setState({dataCount: data.length * 100})
+      this.setState({dataCount: data.length})
       
+      this.getDataToGraph(this.state.data)
       
     })
     
     
 
   }
-  getList(data){
+  getDataToGraph(data){
     if (data) {
-      // console.log(this.state.data)
-      return data.reverse.map((item)=> (
-        <li key={item.id}>{item.ADR}</li>
-      ))
-    }
-    
+      let occ = []
+      for (let i in data){
+        occ.push({
+          value: parseInt(data[i].OccPercent.substr(0, data[i].OccPercent.length - 2), 10)
+        })
+      }
+      this.setState({occPercent: occ})
+      console.log(occ)
+    }  
   }
-  log(a){
-    console.log(a)
-  }
+  
+
+
+
+
   render() {
-    console.log(this.state.data)
+    
     return (
       <div className="App">
         <header className="App-header">
@@ -99,7 +105,8 @@ class App extends Component {
                   speed: 1
                 },
                 line_linked: {
-                  distance: 10
+                  distance: 200,
+                  color:'#333'
                 },
               },
               interactivity: {
@@ -116,18 +123,11 @@ class App extends Component {
           <h1 className="App-title">Graphyte &copy; <span style={styles.subtitle}>| real-time data handling</span></h1>
         </header>
           
-          {/* {this.state.data.map(item => (
-            <ul key={item.name}>{item.owner} | {item.id} | {item.name}</ul>
-          ))} */}
-          {/* <Graph data={this.state.data}/> */}
-          {/* <ol>{
-            this.state.data.map(item=> (
-              <li key={item.id}>{item.id}</li>
-            ))
-          }</ol> */}
-          {/* {this.getList(this.state.data)} */}
-
+         
           <h3>Client: Clarion New Hope (demo)</h3>
+          
+          <Recharts data={this.state.occPercent} />
+
           <Occ data={this.state.data} />
           
           

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Icon, Label, Menu, Table, Progress } from 'semantic-ui-react'
-
+import Particles from 'react-particles-js'
 const getColumn = data => {
   if(data){
     let reversed = data.slice(0).reverse()
@@ -9,7 +9,8 @@ const getColumn = data => {
       <Table.Row key={item.id}>
         <Table.Cell>
           {item.ADR}
-          <Progress indicating percent={100*(parseInt(item.ADR) / 180) }/>
+          <Progress indicating percent={100*(parseInt(item.ADR, 10) / 180) }/>
+          
         </Table.Cell>
         <Table.Cell>
           <Label color='blue'>{item.Available}</Label>
@@ -19,7 +20,36 @@ const getColumn = data => {
         </Table.Cell>
         <Table.Cell>
           {item.OccPercent}
-          <Progress percent={parseInt(item.OccPercent.substr(0,item.OccPercent.length - 2))} indicating/>
+          <Progress percent={parseInt(item.OccPercent.substr(0,item.OccPercent.length - 2), 10)} indicating/>
+          <Particles 
+            height={'5vh'}
+            params={{
+              particles: {
+                number: {
+                  value: parseInt(item.OccPercent.substr(0,item.OccPercent.length - 2), 10)
+                },
+                color: {
+                  value: '#ccffcc' //'#DAF7A6'
+                },
+                move: {
+                  speed: 1
+                },
+                line_linked: {
+                  distance: 20,
+                  color: '#222'
+                },
+              },
+              interactivity: {
+                detect_on: 'window',
+                events: {
+                  onclick: {
+                    enable: true,
+                    mode: 'repulse'
+                  }
+                }
+              }
+            }}
+            />
         </Table.Cell>
         <Table.Cell>
           <Label color='yellow'>{item.RevPAR}</Label>
