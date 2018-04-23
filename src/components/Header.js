@@ -1,6 +1,7 @@
 import React from 'react'
 import Particles from 'react-particles-js'
-import { Button } from 'semantic-ui-react'
+import { Button, Image } from 'semantic-ui-react'
+import Google from '../assets/google-plus.svg'
 
 
 const styles = {
@@ -15,7 +16,13 @@ const styles = {
   sign: {
     position: 'absolute',
     top: 15,
-    left: window.innerWidth - 120
+    left: window.innerWidth - 120,
+    backgroundColor: 'red !important'
+  },
+  sign2: {
+    position: 'absolute',
+    top: 15,
+    left: window.innerWidth - 220
   }
 }
 
@@ -51,10 +58,13 @@ export default props => (
               }
             }}
             />
-          <h1 className="App-title" style={styles.title}>Graphyte &copy; <span style={styles.subtitle}>| real-time data handling</span></h1>
+          <h1 className="App-title" style={styles.title}>Graphyte &copy; <span style={styles.subtitle}> | real-time data handling</span></h1>
           
         </header>
-        <Button style={styles.sign} onClick={props.signClickGoogle}>Sign in</Button>
+        {/* <Button style={styles.sign2} onClick={()=>console.log('beta test')}>Beta</Button> */}
+        <Button style={styles.sign} onClick={props.signClickGoogle} inverted>
+          <Image src={Google} height={20} alt=''/>
+        </Button>
          
           <h3>Client: Clarion New Hope (demo)</h3>
   </div>

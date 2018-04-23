@@ -37,7 +37,8 @@ class App extends Component {
   }
   componentDidMount(){
     const store = fire.database().ref('report/')
-    let data = []
+    let data = [], rev = []
+    
     store.on('value', snap => {
       
       let items = snap.val()
@@ -68,9 +69,9 @@ class App extends Component {
       this.setState({dataCount: data.length})
       data = []
       this.getDataToGraph(this.state.data)
-      
+    this.getProfile()
     })
-    
+    // this.getProfile()
     
 
   }
@@ -78,13 +79,19 @@ class App extends Component {
     if (data) {
       let occ = []
       for (let i in data){
+        // console.log(typeof(data[i].RoomRev))
         occ.push({
-          value: parseInt(data[i].OccPercent.substr(0, data[i].OccPercent.length - 2), 10)
+          File: parseInt(data[i].OccPercent.substr(0, data[i].OccPercent.length - 2), 10),
+          Revenue: parseInt(data[i].RoomRev, 10)
         })
+       
       }
       this.setState({occPercent: occ})
-      // console.log(occ)
-    }  
+      
+      console.log('Data received.')
+    } else {
+      console.warn('No data received.')
+    }
   }
 
   signInToGoogle(){
@@ -94,6 +101,7 @@ class App extends Component {
       // console.log(token)
       // The signed-in user info.
       var user = result.user;
+      
       // ...
     }).catch(function(error) {
       // Handle Errors here.
@@ -106,14 +114,28 @@ class App extends Component {
       // ...
     })
   }
+
   getProfile(){
-    let user = firebase.auth().currentUser;
-    if (user) {
-      // console.log(user.email)
-      this.setState({user: user.email})
-    } else {
-      console.log('not signed in')
-    }
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        let email  = user.email
+        console.log(email)
+      } else {
+        // console/.log('No user is signed in.')
+      }
+
+      if (user != null) {
+        user.providerData.forEach(function (profile) {
+          console.log("Sign-in provider: " + profile.providerId);
+          console.log("  Provider-specific UID: " + profile.uid);
+          console.log("  Name: " + profile.displayName);
+          console.log("  Email: " + profile.email);
+          console.log("  Photo URL: " + profile.photoURL);
+        });
+      }
+      
+    })
+    
   }
   
 
@@ -124,16 +146,18 @@ class App extends Component {
     // firebase.auth().onAuthStateChanged(function(user) { console.log(user.email)})
     // this.signInToGoogle()
     // this.getProfile()
+    // console.log(this.state.user)
+    
     return (
       <div className="App">
 
-        <Header dataCount={this.state.dataCount} profile={this.state.user} signClickGoogle={()=>this.signInToGoogle()}/>
+        <Header dataCount={this.state.dataCount} signClickGoogle={()=>this.signInToGoogle()}/>
 
         <Recharts data={this.state.occPercent} />
 
         <Occ data={this.state.data} />
 
-        <Composed />
+        <Composed data={this.state.occPercent}/>
           
           
       </div>
