@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, Label, Button } from 'semantic-ui-react'
+// import { Icon, Label, Button } from 'semantic-ui-react'
 import './App.css';
 import firebase from 'firebase'
 
@@ -77,16 +77,19 @@ class App extends Component {
   }
   getDataToGraph(data){
     if (data) {
-      let occ = []
+      let clean = []
       for (let i in data){
         // console.log(typeof(data[i].RoomRev))
-        occ.push({
+        
+        // Push values to graph
+        clean.push({
           File: parseInt(data[i].OccPercent.substr(0, data[i].OccPercent.length - 2), 10),
-          Revenue: parseInt(data[i].RoomRev, 10)
+          Revenue: parseFloat(data[i].RoomRev, 2),
+          Day: data[i].Day
         })
        
       }
-      this.setState({occPercent: occ})
+      this.setState({cleanData: clean})
       
       console.log('Data received.')
     } else {
@@ -119,20 +122,20 @@ class App extends Component {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         let email  = user.email
-        console.log(email)
+        // console.log(email)
       } else {
         // console/.log('No user is signed in.')
       }
 
-      if (user != null) {
-        user.providerData.forEach(function (profile) {
-          console.log("Sign-in provider: " + profile.providerId);
-          console.log("  Provider-specific UID: " + profile.uid);
-          console.log("  Name: " + profile.displayName);
-          console.log("  Email: " + profile.email);
-          console.log("  Photo URL: " + profile.photoURL);
-        });
-      }
+      // if (user != null) {
+      //   user.providerData.forEach(function (profile) {
+      //     console.log("Sign-in provider: " + profile.providerId);
+      //     console.log("  Provider-specific UID: " + profile.uid);
+      //     console.log("  Name: " + profile.displayName);
+      //     console.log("  Email: " + profile.email);
+      //     console.log("  Photo URL: " + profile.photoURL);
+      //   });
+      // }
       
     })
     
@@ -153,11 +156,11 @@ class App extends Component {
 
         <Header dataCount={this.state.dataCount} signClickGoogle={()=>this.signInToGoogle()}/>
 
-        <Recharts data={this.state.occPercent} />
+        <Recharts data={this.state.cleanData} />
 
         <Occ data={this.state.data} />
 
-        <Composed data={this.state.occPercent}/>
+        <Composed data={this.state.cleanData}/>
           
           
       </div>
